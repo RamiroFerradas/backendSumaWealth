@@ -46,10 +46,11 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Airline, Airport } = sequelize.models;
+const { Airline, Airport, Flights } = sequelize.models;
 
 // Aca vendrian las relaciones
 
+// AIRPOTS & AIRLINES
 Airport.belongsToMany(Airline, { through: "airline_airport" });
 Airline.belongsToMany(Airport, { through: "airline_airport" });
 

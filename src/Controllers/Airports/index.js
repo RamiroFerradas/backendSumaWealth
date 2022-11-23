@@ -43,7 +43,7 @@ const getAirports = async () => {
   }
 };
 
-// GET (ONE) AIRPORTS BY NAME
+// GET (ONE) AIRPORTS BY ID
 const getAirportsById = async (id) => {
   //
 
@@ -58,6 +58,7 @@ const getAirportsById = async (id) => {
   }
 };
 
+// GET (ONE) AIRPORTS BY NAME
 const getAirportsByName = async (name) => {
   console.log(name);
 
@@ -72,9 +73,40 @@ const getAirportsByName = async (name) => {
   }
 };
 
+// POST (ONE) AIRPORTS
+const postAirport = async (data) => {
+  try {
+    let { iata_code, airport, city, state, country, latitude, longitude } =
+      data;
+
+    const [row, created] = await Airport.findOrCreate({
+      where: {
+        airport,
+      },
+      defaults: {
+        iata_code,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+      },
+    });
+
+    if (!created) {
+      throw new Error("El aeropuerto ya existe");
+    } else {
+      return "Aeropuerto creado correctamente";
+    }
+  } catch (e) {
+    console.error(`${ERROR}postAirport --→ ${e}`);
+  }
+};
+
 module.exports = {
   getAirports,
   jsonAirports,
   getAirportsByName,
   getAirportsById,
+  postAirport,
 };

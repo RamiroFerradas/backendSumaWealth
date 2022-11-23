@@ -1,9 +1,11 @@
 const { Router } = require("express");
+const { Airport } = require("../../db");
 
 const {
   getAirports,
   getAirportsByName,
   getAirportsById,
+  postAirport,
 } = require("../../Controllers/Airports");
 
 const router = Router();
@@ -36,7 +38,17 @@ router.get("/:id", async (req, res) => {
     console.log(id);
     res.json(await getAirportsById(id));
   } catch (e) {
-    res.status(404).send(`Error --→ ${e}`);
+    res.status(404).send(ERROR, e);
+  }
+});
+
+// ---------- POST AIRPORTS ----------
+
+router.post("/", async (req, res) => {
+  try {
+    res.json(await postAirport(req.body));
+  } catch (e) {
+    res.status(404).send(ERROR, e);
   }
 });
 

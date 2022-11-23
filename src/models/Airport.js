@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
       },
       airport: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       city: {
         type: DataTypes.STRING,
