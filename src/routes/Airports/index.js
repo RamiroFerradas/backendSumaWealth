@@ -8,7 +8,7 @@ const ERROR = `Error @ routes/Contratos --> `;
 
 // -------------------------------------------
 
-// ---------- GET CONTRACTS ----------
+// ---------- GET AIRPORTS ----------
 router.get("/", async (req, res) => {
   try {
     //
