@@ -6,6 +6,7 @@ const {
   getAirportsByName,
   getAirportsById,
   postAirport,
+  modifyAirport,
 } = require("../../Controllers/Airports");
 
 const router = Router();
@@ -47,6 +48,19 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     res.json(await postAirport(req.body));
+  } catch (e) {
+    res.status(404).send(ERROR, e);
+  }
+});
+
+// MODIFY AIRPORT
+router.put("/:id", async (req, res) => {
+  //
+  try {
+    const { id } = req.params;
+    res.json(await modifyAirport(id, req.body));
+
+    //
   } catch (e) {
     res.status(404).send(ERROR, e);
   }

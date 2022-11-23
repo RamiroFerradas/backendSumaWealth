@@ -5,6 +5,7 @@ const {
   getAirlinesName,
   getAirlinesById,
   postAirline,
+  modifyAirline,
 } = require("../../Controllers/Airlines");
 
 const router = Router();
@@ -44,6 +45,19 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     res.json(await postAirline(req.body));
+  } catch (e) {
+    res.status(404).send(ERROR, e);
+  }
+});
+
+// MODIFY AIRLINE
+router.put("/:id", async (req, res) => {
+  //
+  try {
+    const { id } = req.params;
+    res.json(await modifyAirline(id, req.body));
+
+    //
   } catch (e) {
     res.status(404).send(ERROR, e);
   }

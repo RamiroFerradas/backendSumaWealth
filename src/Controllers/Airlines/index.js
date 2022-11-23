@@ -87,10 +87,40 @@ const postAirline = async (data) => {
   }
 };
 
+// PUT (ONE) AIRLINE BY ID
+
+const modifyAirline = async (id, data) => {
+  try {
+    let { iata_code, airline } = data;
+
+    const airlineId = await Airline.findOne({
+      where: { id },
+    });
+
+    await Airline.update(
+      {
+        iata_code,
+        airline,
+      },
+
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return `Aerolinea '${airlineId.airline}' modificado con éxito.`;
+  } catch (e) {
+    console.error(`${ERROR}, putAirline --→ ${e}`);
+  }
+};
+
 module.exports = {
   jsonAirlines,
   getAirlines,
   getAirlinesById,
   getAirlinesName,
   postAirline,
+  modifyAirline,
 };

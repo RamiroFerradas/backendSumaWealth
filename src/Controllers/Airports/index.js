@@ -103,10 +103,46 @@ const postAirport = async (data) => {
   }
 };
 
+// PUT (ONE) AIRPORTS BY ID
+
+const modifyAirport = async (id, data) => {
+  try {
+    let { iata_code, airport, city, state, country, latitude, longitude } =
+      data;
+
+    const airportId = await Airport.findOne({
+      where: { id },
+    });
+
+    await Airport.update(
+      {
+        iata_code,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+        airport,
+      },
+
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return `Aeropuerto '${airportId.airport}' modificado con éxito.`;
+  } catch (e) {
+    console.error(`${ERROR}, putAirport --→ ${e}`);
+  }
+};
+
 module.exports = {
   getAirports,
   jsonAirports,
   getAirportsByName,
   getAirportsById,
   postAirport,
+  modifyAirport,
 };
