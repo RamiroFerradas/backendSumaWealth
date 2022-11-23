@@ -1,7 +1,10 @@
 const { Router } = require("express");
 
-const router = Router();
+const airportsRoute = require("./Airports/index.js");
 
-// Configurar los routers
+const router = Router();
+// -----------------------------------------
+
+router.use("/airports", airportsRoute);
 
 module.exports = router;
