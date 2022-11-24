@@ -6,7 +6,6 @@ const ERROR = "Error @ Controllers/Airports";
 
 // SAVE DB (ALL) AIRPORTS
 const jsonAirports = async () => {
-  //
   try {
     airports.map(async (ele) => {
       Airport.findOrCreate({
@@ -25,7 +24,6 @@ const jsonAirports = async () => {
     });
     console.log("✔ Aeropuertos cargados ------------");
     return "✔ Aeropuertos cargados.";
-    //
   } catch (e) {
     console.error(`${ERROR}jsonAirports --→ ${e}`);
   }
@@ -33,11 +31,9 @@ const jsonAirports = async () => {
 
 // GET (ALL) AIRPORTS
 const getAirports = async () => {
-  //
   try {
-    const airport = await Airport.findAll();
+    const airport = await Airport.findAll({ order: ["airport"] });
     return airport;
-    //
   } catch (e) {
     console.error(`${ERROR}getAirports --→ ${e}`);
   }
@@ -45,14 +41,11 @@ const getAirports = async () => {
 
 // GET (ONE) AIRPORTS BY ID
 const getAirportsById = async (id) => {
-  //
-
   try {
     const airportId = await Airport.findOne({
       where: { id },
     });
     return airportId;
-    //
   } catch (e) {
     console.error(`${ERROR}getAirportByName --→ ${e}`);
   }
@@ -67,7 +60,6 @@ const getAirportsByName = async (name) => {
       where: { airport: { [Op.iLike]: `%${name}%` } },
     });
     return airportName;
-    //
   } catch (e) {
     console.error(`${ERROR}getAirportByName --→ ${e}`);
   }

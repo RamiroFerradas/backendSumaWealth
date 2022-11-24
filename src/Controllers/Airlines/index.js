@@ -27,7 +27,7 @@ const jsonAirlines = async () => {
 // GET (ALL) AIRLINES
 const getAirlines = async () => {
   try {
-    const airline = await Airline.findAll();
+    const airline = await Airline.findAll({ order: ["airline"] });
     return airline;
   } catch (e) {
     console.error(`${ERROR}getAirlines --→ ${e}`);

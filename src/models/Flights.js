@@ -4,12 +4,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "flights",
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: true,
-        primaryKey: true,
-      },
       year: {
         type: DataTypes.INTEGER,
       },
