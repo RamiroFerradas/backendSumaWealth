@@ -40,7 +40,12 @@ const getAirlinesById = async (id) => {
     const airlineID = await Airline.findOne({
       where: { id },
     });
-    return airlineID;
+    if (airlineID) {
+      return airlineID;
+    } else {
+      console.log(`No se encontraron aerolineas con el ID: ${id}`);
+      return `No se encontraron aerolineas con el ID: ${id}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
   }
@@ -52,7 +57,12 @@ const getAirlinesName = async (name) => {
     const airlineName = await Airline.findOne({
       where: { airline: { [Op.iLike]: `%${name}%` } },
     });
-    return airlineName;
+    if (airlineName) {
+      return airlineName;
+    } else {
+      console.log(`No se encontraron aerolineas con el nombre: ${name}`);
+      return `No se encontraron aerolineas con el nombre: ${name}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
   }

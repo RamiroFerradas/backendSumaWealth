@@ -45,7 +45,12 @@ const getAirportsById = async (id) => {
     const airportId = await Airport.findOne({
       where: { id },
     });
-    return airportId;
+    if (airportId) {
+      return airportId;
+    } else {
+      console.log(`No se encontraron aeropuertos con el ID: ${id}`);
+      return `No se encontraron aeropuertos con el ID: ${id}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
   }
@@ -59,7 +64,12 @@ const getAirportsByName = async (name) => {
     const airportName = await Airport.findOne({
       where: { airport: { [Op.iLike]: `%${name}%` } },
     });
-    return airportName;
+    if (airportName) {
+      return airportName;
+    } else {
+      console.log(`No se encontraron aerolineas con el nombre: ${name}`);
+      return `No se encontraron aerolineas con el nombre: ${name}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
   }
