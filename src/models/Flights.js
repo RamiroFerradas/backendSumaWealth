@@ -81,7 +81,7 @@ module.exports = (sequelize) => {
       cancelled: {
         type: DataTypes.INTEGER,
       },
-      cancelation_reason: {
+      cancellation_reason: {
         type: DataTypes.STRING,
       },
       air_system_delay: {

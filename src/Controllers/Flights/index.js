@@ -7,66 +7,210 @@ const ERROR = "Error @ Controllers/Flights";
 // GET (ALL) FLIGHTS
 
 const getFlights = async (page) => {
-  const inicio = () => {
-    if (!page || page == 0 || page >= 5820) {
-      return 0;
-    } else {
-      return page * 1000 - 1;
-    }
-  };
-
   try {
+    const inicio = () => {
+      if (!page || page == 0) return 0;
+      else return page * 1000 - 1;
+    };
     const { count, rows } = await Flights.findAndCountAll({
       offset: inicio(),
       limit: 1000,
       order: ["id"],
     });
 
-    const res = rows.map((e) => e.dataValues);
-
-    return res;
+    if (rows.length) {
+      return rows;
+    } else {
+      console.log("No se encontraron vuelos");
+      return "No se encontraron vuelos";
+    }
   } catch (e) {
     console.error(`${ERROR}, getFlights --→ ${e}`);
   }
 };
 
-// GET (ONE) FLIGHT BY ID
-const getFligthsById = async (id) => {
+// POST (ONE) FLIGHT
+const postFlight = async (data) => {
   try {
-    let flight_ID = await Flights.findOne({
+    let {
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
+    } = data;
+
+    const updateFlight = await Flights.create({
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
+    });
+
+    if (updateFlight) {
+      console.log(`Se creo el vuelo correctamente`);
+      return updateFlight;
+    } else {
+      return "No se pudo crear el vuelo, vuelve a intentarlo";
+    }
+  } catch (e) {
+    console.error(`${ERROR}, postFlight --→ ${e}`);
+  }
+};
+
+// MODIFY (ONE) FLIGHT
+const modifyFlight = async (id, data) => {
+  console.log(data);
+  try {
+    let {
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
+    } = data;
+
+    const updateFlight = await Flights.update(
+      {
+        year,
+        month,
+        day,
+        day_of_week,
+        airline,
+        flight_number,
+        tail_number,
+        origin_airport,
+        destination_airport,
+        scheduled_departure,
+        departure_time,
+        departure_delay,
+        taxi_out,
+        wheels_off,
+        scheduled_time,
+        elapsed_time,
+        air_time,
+        distance,
+        wheels_on,
+        taxi_in,
+        scheduled_arrival,
+        arrival_time,
+        arrival_delay,
+        diverted,
+        cancelled,
+        cancellation_reason,
+        air_system_delay,
+        security_delay,
+        airline_delay,
+        late_aircraft_delay,
+        weather_delay,
+      },
+
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    if (updateFlight) {
+      console.log(`Se actualizo el vuelo id: ${id} correctamente.`);
+      return `Se actualizo el vuelo id: ${id} correctamente.`;
+    } else {
+      return "No se pudo actualizar el vuelo";
+    }
+  } catch (e) {
+    console.error(`${ERROR}, modifyFlight --→ ${e}`);
+  }
+};
+
+const deleteFlight = async (id) => {
+  try {
+    await Flights.destroy({
       where: { id },
     });
-
-    const airlineID = (
-      await Airline.findOne({
-        where: { iata_code: flight_ID.airline },
-      })
-    ).dataValues;
-
-    flight_ID = {
-      ...flight_ID.dataValues,
-      airline: {
-        iata_code: airlineID.iata_code,
-        name: airlineID.airline,
-      },
-    };
-
-    return flight_ID;
+    console.log(`Vuelo id: '${id}' borado con exito`);
+    return `Vuelo id: '${id}' borado con exito`;
   } catch (e) {
-    console.error(`${ERROR}, getAirportByName --→ ${e}`);
+    console.error(`${ERROR}, deleteFlight --→ ${e}`);
   }
 };
-
-// GET (ONE) FLIGHTS BY NAME
-const getAirportsByName = async (name) => {
-  try {
-    const airportName = await Flights.findOne({
-      where: { airport: { [Op.iLike]: `%${name}%` } },
-    });
-    return airportName;
-  } catch (e) {
-    console.error(`${ERROR}getAirportByName --→ ${e}`);
-  }
-};
-
-module.exports = { getFlights, getFligthsById };
+module.exports = { getFlights, postFlight, modifyFlight, deleteFlight };

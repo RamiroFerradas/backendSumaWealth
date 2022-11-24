@@ -1,7 +1,17 @@
 const { Router } = require("express");
 const { Fligths } = require("../../db");
 
-const { getFlights, getFligthsById } = require("../../Controllers/Flights");
+const {
+  getFlights,
+  postFlight,
+  modifyFlight,
+  deleteFlight,
+} = require("../../Controllers/Flights");
+const {
+  getFligthsById,
+  getFligthsByNumber,
+  getFligthsByTailNumber,
+} = require("../../Controllers/Flights/FlightsQuerys");
 
 const router = Router();
 
@@ -11,23 +21,21 @@ const ERROR = `Error @ routes/Flights --> `;
 
 // ---------- GET FLIGHTS // GET FLIGHTS BY NAME ----------
 router.get("/", async (req, res) => {
-  const { page } = req.query; // traer pag por query
+  const { page, flight_number, tail_number } = req.query;
 
   try {
-    const { name } = req.query;
-    if (name) {
-      // res.json(await getFlightsByName(name));
+    if (flight_number || tail_number) {
+      flight_number && res.json(await getFligthsByNumber(flight_number));
+      tail_number && res.json(await getFligthsByTailNumber(tail_number));
     } else {
-      const flights = await getFlights(page);
-      if (flights.length) res.json(flights);
-      else return "No se han encontrado vuelos.";
+      res.json(await getFlights(page));
     }
   } catch (e) {
     res.status(400).send(ERROR, e);
   }
 });
 
-// ---------- GET AIRPORTS BY ID ----------
+// ---------- GET FLIGHT BY ID ----------
 
 router.get("/:id", async (req, res) => {
   try {
@@ -39,21 +47,34 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ---------- POST AIRPORTS ----------
+// ---------- POST FLIGHT ----------
 
 router.post("/", async (req, res) => {
   try {
-    res.json(await postAirport(req.body));
+    res.json(await postFlight(req.body));
   } catch (e) {
     res.status(404).send(ERROR, e);
   }
 });
 
-// MODIFY AIRPORT
+// ---------- MODIFY FLIGHT ----------
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    res.json(await modifyAirport(id, req.body));
+    res.json(await modifyFlight(id, req.body));
+  } catch (e) {
+    res.status(404).send(ERROR, e);
+  }
+});
+
+// DELETE FLIGHT
+router.delete("/:id", async (req, res) => {
+  //
+  try {
+    const { id } = req.params;
+    res.json(await deleteFlight(id, req.body));
+
+    //
   } catch (e) {
     res.status(404).send(ERROR, e);
   }

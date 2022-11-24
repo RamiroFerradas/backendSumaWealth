@@ -53,12 +53,9 @@ router.post("/", async (req, res) => {
 
 // MODIFY AIRLINE
 router.put("/:id", async (req, res) => {
-  //
   try {
     const { id } = req.params;
     res.json(await modifyAirline(id, req.body));
-
-    //
   } catch (e) {
     res.status(404).send(ERROR, e);
   }
@@ -66,12 +63,9 @@ router.put("/:id", async (req, res) => {
 
 // DELETE AIRLINE
 router.delete("/:id", async (req, res) => {
-  //
   try {
     const { id } = req.params;
     res.json(await deleteAirline(id, req.body));
-
-    //
   } catch (e) {
     res.status(404).send(ERROR, e);
   }

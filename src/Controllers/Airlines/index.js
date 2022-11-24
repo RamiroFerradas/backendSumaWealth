@@ -74,9 +74,9 @@ const postAirline = async (data) => {
     });
 
     if (!created) {
-      throw new Error("El aerolinea ya esxiste");
+      throw new Error("La aerolinea ya esxiste");
     } else {
-      return "Aerolinea creado correctamente";
+      return "Aerolinea creada correctamente";
     }
   } catch (e) {
     console.error(`${ERROR}, postAirline --→ ${e}`);
