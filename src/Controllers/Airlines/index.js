@@ -20,7 +20,7 @@ const jsonAirlines = async () => {
     console.log("✔ Aerolineas cargados ------------");
     return "✔ Aerolineas cargados.";
   } catch (e) {
-    console.error(`${ERROR}jsonAirlines --→ ${e}`);
+    console.error(`${ERROR}, jsonAirlines --→ ${e}`);
   }
 };
 
@@ -30,22 +30,19 @@ const getAirlines = async () => {
     const airline = await Airline.findAll({ order: ["airline"] });
     return airline;
   } catch (e) {
-    console.error(`${ERROR}getAirlines --→ ${e}`);
+    console.error(`${ERROR}, getAirlines --→ ${e}`);
   }
 };
 
 // GET (ONE) AIRLINE BY ID
 const getAirlinesById = async (id) => {
-  //
-
   try {
     const airlineID = await Airline.findOne({
       where: { id },
     });
     return airlineID;
-    //
   } catch (e) {
-    console.error(`${ERROR}getAirlinesByName --→ ${e}`);
+    console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
   }
 };
 
@@ -56,9 +53,8 @@ const getAirlinesName = async (name) => {
       where: { airline: { [Op.iLike]: `%${name}%` } },
     });
     return airlineName;
-    //
   } catch (e) {
-    console.error(`${ERROR}getAirlinesByName --→ ${e}`);
+    console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
   }
 };
 
@@ -83,7 +79,7 @@ const postAirline = async (data) => {
       return "Aerolinea creado correctamente";
     }
   } catch (e) {
-    console.error(`${ERROR}postAirline --→ ${e}`);
+    console.error(`${ERROR}, postAirline --→ ${e}`);
   }
 };
 
@@ -93,9 +89,11 @@ const modifyAirline = async (id, data) => {
   try {
     let { iata_code, airline } = data;
 
-    const airlineId = await Airline.findOne({
-      where: { id },
-    });
+    const airlineId = (
+      await Airline.findOne({
+        where: { id },
+      })
+    ).dataValues;
 
     await Airline.update(
       {
@@ -116,6 +114,26 @@ const modifyAirline = async (id, data) => {
   }
 };
 
+// DELETE (ONE) AIRLINE BY ID
+
+const deleteAirline = async (id) => {
+  const airlineId = (
+    await Airline.findOne({
+      where: { id },
+    })
+  ).dataValues;
+
+  try {
+    await Airline.destroy({
+      where: { id },
+    });
+    console.log(`Aerolinea '${airlineId.airline}' borrada con exito`);
+    return `Aerolinea '${airlineId.airline}' borrada con exito`;
+  } catch (e) {
+    console.error(`${ERROR}, deleteAirline --→ ${e}`);
+  }
+};
+
 module.exports = {
   jsonAirlines,
   getAirlines,
@@ -123,4 +141,5 @@ module.exports = {
   getAirlinesName,
   postAirline,
   modifyAirline,
+  deleteAirline,
 };

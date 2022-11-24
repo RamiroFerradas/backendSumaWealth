@@ -21,9 +21,11 @@ module.exports = (sequelize) => {
       },
       flight_number: {
         type: DataTypes.INTEGER,
+        // primaryKey: true,
       },
       tail_number: {
         type: DataTypes.STRING,
+        // primaryKey: true,
       },
       origin_airport: {
         type: DataTypes.STRING,

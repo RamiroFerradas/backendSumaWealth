@@ -25,7 +25,7 @@ const jsonAirports = async () => {
     console.log("✔ Aeropuertos cargados ------------");
     return "✔ Aeropuertos cargados.";
   } catch (e) {
-    console.error(`${ERROR}jsonAirports --→ ${e}`);
+    console.error(`${ERROR}, jsonAirports --→ ${e}`);
   }
 };
 
@@ -35,7 +35,7 @@ const getAirports = async () => {
     const airport = await Airport.findAll({ order: ["airport"] });
     return airport;
   } catch (e) {
-    console.error(`${ERROR}getAirports --→ ${e}`);
+    console.error(`${ERROR}, getAirports --→ ${e}`);
   }
 };
 
@@ -47,7 +47,7 @@ const getAirportsById = async (id) => {
     });
     return airportId;
   } catch (e) {
-    console.error(`${ERROR}getAirportByName --→ ${e}`);
+    console.error(`${ERROR}, getAirportByName --→ ${e}`);
   }
 };
 
@@ -61,7 +61,7 @@ const getAirportsByName = async (name) => {
     });
     return airportName;
   } catch (e) {
-    console.error(`${ERROR}getAirportByName --→ ${e}`);
+    console.error(`${ERROR}, getAirportByName --→ ${e}`);
   }
 };
 
@@ -91,7 +91,7 @@ const postAirport = async (data) => {
       return "Aeropuerto creado correctamente";
     }
   } catch (e) {
-    console.error(`${ERROR}postAirport --→ ${e}`);
+    console.error(`${ERROR}, postAirport --→ ${e}`);
   }
 };
 
@@ -130,6 +130,24 @@ const modifyAirport = async (id, data) => {
   }
 };
 
+// DELETE (ONE) AIRPORT BY ID
+
+const deleteAirport = async (id) => {
+  const airportId = await Airport.findOne({
+    where: { id },
+  });
+
+  try {
+    await Airline.destroy({
+      where: { id },
+    });
+    console.log(`Aeropuerto '${airportId.airport}' borrado con exito`);
+    return `Aeropuerto '${airportId.airport}' borrado con exito`;
+  } catch (e) {
+    console.error(`${ERROR}, deleteAirport --→ ${e}`);
+  }
+};
+
 module.exports = {
   getAirports,
   jsonAirports,
@@ -137,4 +155,5 @@ module.exports = {
   getAirportsById,
   postAirport,
   modifyAirport,
+  deleteAirport,
 };
