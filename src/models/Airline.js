@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
     {
       iata_code: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       airline: {
         type: DataTypes.STRING,
