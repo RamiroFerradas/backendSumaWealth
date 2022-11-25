@@ -3,12 +3,16 @@ const { Airport } = require("../../db");
 
 const {
   getAirports,
-  getAirportsByName,
-  getAirportsById,
   postAirport,
   modifyAirport,
   deleteAirport,
 } = require("../../Controllers/Airports");
+const {
+  getAirportsById,
+  getAirportsByName,
+  getAirportsByCountry,
+  getAirportsByCity,
+} = require("../../Controllers/Airports/AirportsQuerys");
 
 const router = Router();
 
@@ -19,9 +23,12 @@ const ERROR = `Error @ routes/Airports --> `;
 // ---------- GET AIRPORTS // GET AIRPORTS BY NAME ----------
 router.get("/", async (req, res) => {
   try {
-    const { name } = req.query;
-    if (name) {
-      res.json(await getAirportsByName(name));
+    const { name, city, country } = req.query;
+
+    if (name || city || country) {
+      name && res.json(await getAirportsByName(name));
+      country && res.json(await getAirportsByCountry(country));
+      city && res.json(await getAirportsByCity(city));
     } else {
       const airports = await getAirports();
       if (airports.length) res.json(airports);

@@ -51,10 +51,10 @@ const getAirlinesById = async (id) => {
   }
 };
 
-// GET (ONE) AIRLINE BY NAME
+// GET (ALL) AIRLINE BY NAME
 const getAirlinesName = async (name) => {
   try {
-    const airlineName = await Airline.findOne({
+    const airlineName = await Airline.findAll({
       where: { airline: { [Op.iLike]: `%${name}%` } },
     });
     if (airlineName) {
@@ -70,23 +70,28 @@ const getAirlinesName = async (name) => {
 
 // POST (ONE) AIRLINE
 const postAirline = async (data) => {
-  console.log(data);
   try {
     let { iata_code, airline } = data;
-    console.log(data);
-    const [row, created] = await Airline.findOrCreate({
-      where: {
-        airline,
-      },
-      defaults: {
-        iata_code,
-      },
-    });
 
-    if (!created) {
-      throw new Error("La aerolinea ya esxiste");
+    if (iata_code) {
+      const [row, created] = await Airline.findOrCreate({
+        where: {
+          airline,
+        },
+        defaults: {
+          iata_code,
+        },
+      });
+      if (!created) {
+        return `la Aerolinea '${airline}' ya existe`;
+      } else {
+        const airlineId = await Airline.findOne({
+          where: { airline },
+        });
+        return `Aerolinea '${airline}' creada correctamente con el ID: ${airlineId.id}`;
+      }
     } else {
-      return "Aerolinea creada correctamente";
+      return "Por favor ingresar iata_code";
     }
   } catch (e) {
     console.error(`${ERROR}, postAirline --→ ${e}`);
@@ -99,26 +104,27 @@ const modifyAirline = async (id, data) => {
   try {
     let { iata_code, airline } = data;
 
-    const airlineId = (
-      await Airline.findOne({
-        where: { id },
-      })
-    ).dataValues;
+    const airlineId = await Airline.findOne({
+      where: { id },
+    });
 
-    await Airline.update(
-      {
-        iata_code,
-        airline,
-      },
-
-      {
-        where: {
-          id,
+    if (airlineId) {
+      await Airline.update(
+        {
+          iata_code,
+          airline,
         },
-      }
-    );
 
-    return `Aerolinea '${airlineId.airline}' modificado con éxito.`;
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return `Aerolinea '${airlineId.airline}' modificado con éxito.`;
+    } else {
+      return `No se encontro aerolinea con el ID: ${id}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, putAirline --→ ${e}`);
   }
@@ -127,18 +133,19 @@ const modifyAirline = async (id, data) => {
 // DELETE (ONE) AIRLINE BY ID
 
 const deleteAirline = async (id) => {
-  const airlineId = (
-    await Airline.findOne({
-      where: { id },
-    })
-  ).dataValues;
-
   try {
-    await Airline.destroy({
+    const airlineId = await Airline.findOne({
       where: { id },
     });
-    console.log(`Aerolinea '${airlineId.airline}' borrada con exito`);
-    return `Aerolinea '${airlineId.airline}' borrada con exito`;
+    if (airlineId) {
+      await Airline.destroy({
+        where: { id },
+      });
+      console.log(`Aerolinea '${airlineId.airline}' borrada con exito`);
+      return `Aerolinea '${airlineId.airline}' borrada con exito`;
+    } else {
+      return "La aerolinea ya fue eliminada";
+    }
   } catch (e) {
     console.error(`${ERROR}, deleteAirline --→ ${e}`);
   }

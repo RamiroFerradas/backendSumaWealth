@@ -113,7 +113,6 @@ const postFlight = async (data) => {
 
 // MODIFY (ONE) FLIGHT
 const modifyFlight = async (id, data) => {
-  console.log(data);
   try {
     let {
       year,

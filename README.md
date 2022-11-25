@@ -47,7 +47,7 @@ npm start
 
     A- Dentro de la interfaz grafica de postgresSQL "pgAdmin 4", accedemos a las tablas ya creadas dentro de la base de datos(airline -> Schemas -> Tables)<p align="left"><img height="300"  src="./src/assets/ScreenShots/tablas.jpg" /><p>
 
-    B- Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega<p align="left"><img height="300"  src="./src/assets/ScreenShots/query tool.jpg" /><p>
+    B- Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega<p align="left"><img height="300"  src="./src/Assets/ScreenShots/query tool.jpg" /><p>
 
     C- ingresamos el siguiente script:
 
@@ -59,5 +59,7 @@ npm start
 
     > **IMPORTANTE:** Reemplazar `TU_RUTA` por la ruta donde tengas guardado el archivo `flights.csv`<p align="left"><img height="300"  src="./src/assets/ScreenShots/carpeta.jpg" /><p>
 
-    D- Quedandonos como en la imagen:<p align="left"><img height="300"  src="./src/assets/ScreenShots/pgadmin.jpg" /><p>
-    clickeamos el boton de "play" remarcado en rojo, en la parte inferior veremos un contador, una vez que finalize tendremos cargados los datos de los vuelos en la base de datos. Si todo salio correctamente deberiamos visualizar un mensaje como el siguiente:<p align="left"><img height="300"  src="./src/assets/ScreenShots/finish.jpg" /><p>
+    D- Quedandonos como en la imagen:<p align="left"><img height="150"  src="./src/assets/ScreenShots/pgadmin.jpg" /><p>
+    clickeamos el boton de "play" remarcado en rojo, en la parte inferior veremos un contador, una vez que finalize tendremos cargados los datos de los vuelos en la base de datos. Si todo salio correctamente deberiamos visualizar un mensaje como el siguiente:<p align="left"><img height="220"  src="./src/assets/ScreenShots/finish.jpg" /><p>
+
+---

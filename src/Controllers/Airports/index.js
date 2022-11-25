@@ -39,42 +39,6 @@ const getAirports = async () => {
   }
 };
 
-// GET (ONE) AIRPORTS BY ID
-const getAirportsById = async (id) => {
-  try {
-    const airportId = await Airport.findOne({
-      where: { id },
-    });
-    if (airportId) {
-      return airportId;
-    } else {
-      console.log(`No se encontraron aeropuertos con el ID: ${id}`);
-      return `No se encontraron aeropuertos con el ID: ${id}`;
-    }
-  } catch (e) {
-    console.error(`${ERROR}, getAirportByName --→ ${e}`);
-  }
-};
-
-// GET (ONE) AIRPORTS BY NAME
-const getAirportsByName = async (name) => {
-  console.log(name);
-
-  try {
-    const airportName = await Airport.findOne({
-      where: { airport: { [Op.iLike]: `%${name}%` } },
-    });
-    if (airportName) {
-      return airportName;
-    } else {
-      console.log(`No se encontraron aerolineas con el nombre: ${name}`);
-      return `No se encontraron aerolineas con el nombre: ${name}`;
-    }
-  } catch (e) {
-    console.error(`${ERROR}, getAirportByName --→ ${e}`);
-  }
-};
-
 // POST (ONE) AIRPORTS
 const postAirport = async (data) => {
   try {
@@ -96,9 +60,12 @@ const postAirport = async (data) => {
     });
 
     if (!created) {
-      throw new Error("El aeropuerto ya existe");
+      return `El aeropuerto '${airport}' ya existe`;
     } else {
-      return "Aeropuerto creado correctamente";
+      const airportId = await Airport.findOne({
+        where: { airport },
+      });
+      return `Aeropuerto '${airport}' creado correctamente con el ID: ${airportId.id}`;
     }
   } catch (e) {
     console.error(`${ERROR}, postAirport --→ ${e}`);
@@ -116,25 +83,28 @@ const modifyAirport = async (id, data) => {
       where: { id },
     });
 
-    await Airport.update(
-      {
-        iata_code,
-        city,
-        state,
-        country,
-        latitude,
-        longitude,
-        airport,
-      },
-
-      {
-        where: {
-          id,
+    if (airportId) {
+      await Airport.update(
+        {
+          iata_code,
+          city,
+          state,
+          country,
+          latitude,
+          longitude,
+          airport,
         },
-      }
-    );
 
-    return `Aeropuerto '${airportId.airport}' modificado con éxito.`;
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return `Aeropuerto '${airportId.airport}' modificado con éxito.`;
+    } else {
+      return `No se encontro aeropuerto con el ID: ${id}`;
+    }
   } catch (e) {
     console.error(`${ERROR}, putAirport --→ ${e}`);
   }
@@ -143,16 +113,19 @@ const modifyAirport = async (id, data) => {
 // DELETE (ONE) AIRPORT BY ID
 
 const deleteAirport = async (id) => {
-  const airportId = await Airport.findOne({
-    where: { id },
-  });
-
   try {
-    await Airline.destroy({
+    const airportId = await Airport.findOne({
       where: { id },
     });
-    console.log(`Aeropuerto '${airportId.airport}' borrado con exito`);
-    return `Aeropuerto '${airportId.airport}' borrado con exito`;
+    if (airportId) {
+      await Airport.destroy({
+        where: { id },
+      });
+      console.log(`Aeropuerto '${airportId.airport}' borrado con exito`);
+      return `Aeropuerto '${airportId.airport}' borrado con exito`;
+    } else {
+      return "El aeropuerto ya fue eliminado";
+    }
   } catch (e) {
     console.error(`${ERROR}, deleteAirport --→ ${e}`);
   }
@@ -161,8 +134,6 @@ const deleteAirport = async (id) => {
 module.exports = {
   getAirports,
   jsonAirports,
-  getAirportsByName,
-  getAirportsById,
   postAirport,
   modifyAirport,
   deleteAirport,

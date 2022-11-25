@@ -19,7 +19,7 @@ const ERROR = `Error @ routes/Flights --> `;
 
 // -------------------------------------------
 
-// ---------- GET FLIGHTS // GET FLIGHTS BY NAME ----------
+// -------- GET ALL FLIGHTS // GET FLIGHTS BY NAME/FLIGHT NUMBER/TAIL NUMBER --------
 router.get("/", async (req, res) => {
   const { page, flight_number, tail_number } = req.query;
 
