@@ -31,6 +31,7 @@ const getAirlines = async () => {
     return airline;
   } catch (e) {
     console.error(`${ERROR}, getAirlines --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -48,6 +49,7 @@ const getAirlinesById = async (id) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -65,6 +67,7 @@ const getAirlinesName = async (name) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirlinesByName --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -95,6 +98,7 @@ const postAirline = async (data) => {
     }
   } catch (e) {
     console.error(`${ERROR}, postAirline --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -127,6 +131,7 @@ const modifyAirline = async (id, data) => {
     }
   } catch (e) {
     console.error(`${ERROR}, putAirline --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -148,6 +153,7 @@ const deleteAirline = async (id) => {
     }
   } catch (e) {
     console.error(`${ERROR}, deleteAirline --→ ${e}`);
+    return e.message;
   }
 };
 

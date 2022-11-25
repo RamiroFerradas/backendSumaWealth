@@ -31,10 +31,11 @@ const getFligthsById = async (id) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
+    return e.message;
   }
 };
 
-// GET (ONE) FLIGHTS BY FLIGHT NUMBER
+// GET (ALL) FLIGHTS BY FLIGHT NUMBER
 const getFligthsByNumber = async (flight_number) => {
   try {
     let flight = await Flights.findAll({
@@ -50,24 +51,28 @@ const getFligthsByNumber = async (flight_number) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getFligthsByNumber --→ ${e}`);
+    return e.message;
   }
 };
 
-// GET (ONE) FLIGHTS BY TAIL NUMBER
+// GET (ALL) FLIGHTS BY TAIL NUMBER
 const getFligthsByTailNumber = async (tail_number) => {
   try {
     let flight = await Flights.findAll({
-      where: { tail_number },
+      where: { tail_number: { [Op.iLike]: `%${tail_number}%` } },
     });
 
-    if (flight) {
+    if (flight.length) {
       return flight;
     } else {
-      console.log(`No se encontraron vuelos con tail_number: ${tail_number}`);
-      return `No se encontraron vuelos con tail_number: ${tail_number}`;
+      console.log(
+        `No se encontraron vuelos con el numero de cola: ${tail_number}`
+      );
+      return `No se encontraron vuelos con el numero de cola: ${tail_number}`;
     }
   } catch (e) {
     console.error(`${ERROR}, getFligthsByTailNumber --→ ${e}`);
+    return e.message;
   }
 };
 

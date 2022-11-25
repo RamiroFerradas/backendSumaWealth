@@ -19,6 +19,11 @@ const getFlights = async (page) => {
     });
 
     if (rows.length) {
+      console.log(`Vuelos encontrados:`, count);
+      console.log(
+        `Mostrando vuelos en la pagina ${page ? page : 1} /`,
+        Math.floor(count / 1000)
+      );
       return rows;
     } else {
       console.log("No se encontraron vuelos");
@@ -26,6 +31,7 @@ const getFlights = async (page) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getFlights --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -66,7 +72,7 @@ const postFlight = async (data) => {
       weather_delay,
     } = data;
 
-    const updateFlight = await Flights.create({
+    const postFlight = await Flights.create({
       year,
       month,
       day,
@@ -100,14 +106,15 @@ const postFlight = async (data) => {
       weather_delay,
     });
 
-    if (updateFlight) {
-      console.log(`Se creo el vuelo correctamente`);
-      return updateFlight;
+    if (postFlight) {
+      console.log(`Se creo el vuelo correctamente con el ID: ${postFlight.id}`);
+      return postFlight;
     } else {
       return "No se pudo crear el vuelo, vuelve a intentarlo";
     }
   } catch (e) {
     console.error(`${ERROR}, postFlight --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -198,18 +205,28 @@ const modifyFlight = async (id, data) => {
     }
   } catch (e) {
     console.error(`${ERROR}, modifyFlight --→ ${e}`);
+    return e.message;
   }
 };
 
 const deleteFlight = async (id) => {
   try {
-    await Flights.destroy({
+    const fligthId = await Flights.findOne({
       where: { id },
     });
-    console.log(`Vuelo id: '${id}' borado con exito`);
-    return `Vuelo id: '${id}' borado con exito`;
+
+    if (fligthId) {
+      await Flights.destroy({
+        where: { id },
+      });
+      console.log(`Vuelo id: '${id}' borado con exito`);
+      return `Vuelo id: '${id}' borado con exito`;
+    } else {
+      return "El vuelo ya fue borrado";
+    }
   } catch (e) {
     console.error(`${ERROR}, deleteFlight --→ ${e}`);
+    return e.message;
   }
 };
 module.exports = { getFlights, postFlight, modifyFlight, deleteFlight };

@@ -36,6 +36,7 @@ const getAirports = async () => {
     return airport;
   } catch (e) {
     console.error(`${ERROR}, getAirports --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -69,6 +70,7 @@ const postAirport = async (data) => {
     }
   } catch (e) {
     console.error(`${ERROR}, postAirport --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -107,6 +109,7 @@ const modifyAirport = async (id, data) => {
     }
   } catch (e) {
     console.error(`${ERROR}, putAirport --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -128,6 +131,7 @@ const deleteAirport = async (id) => {
     }
   } catch (e) {
     console.error(`${ERROR}, deleteAirport --→ ${e}`);
+    return e.message;
   }
 };
 

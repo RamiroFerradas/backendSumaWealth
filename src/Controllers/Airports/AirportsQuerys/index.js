@@ -17,6 +17,7 @@ const getAirportsById = async (id) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -34,6 +35,7 @@ const getAirportsByName = async (name) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
+    return e.message;
   }
 };
 // GET (ALL) AIRPORTS BY COUNTRY
@@ -53,6 +55,7 @@ const getAirportsByCountry = async (country) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirportByName --→ ${e}`);
+    return e.message;
   }
 };
 
@@ -75,6 +78,7 @@ const getAirportsByCity = async (city) => {
     }
   } catch (e) {
     console.error(`${ERROR}, getAirportsByCity --→ ${e}`);
+    return e.message;
   }
 };
 
