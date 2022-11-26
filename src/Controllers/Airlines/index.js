@@ -7,18 +7,22 @@ const ERROR = "Error @ Controllers/Airlines";
 // SAVE DB (ALL) AIRLINES
 const jsonAirlines = async () => {
   try {
-    airlines.map(async (ele) => {
-      Airline.findOrCreate({
-        where: {
-          airline: ele?.AIRLINE,
-        },
-        defaults: {
-          iata_code: ele?.IATA_CODE,
-        },
+    const airlinesDB = await Airline.findAll();
+
+    if (!airlinesDB.length) {
+      airlines.map(async (ele) => {
+        Airline.findOrCreate({
+          where: {
+            airline: ele?.AIRLINE,
+          },
+          defaults: {
+            iata_code: ele?.IATA_CODE,
+          },
+        });
       });
-    });
-    console.log("✔ Aerolineas cargados ------------");
-    return "✔ Aerolineas cargados.";
+      console.log("✔ Aerolineas cargadas ------------");
+      return "✔ Aerolineas cargadas.";
+    }
   } catch (e) {
     console.error(`${ERROR}, jsonAirlines --→ ${e}`);
   }
@@ -28,7 +32,12 @@ const jsonAirlines = async () => {
 const getAirlines = async () => {
   try {
     const airline = await Airline.findAll({ order: ["airline"] });
-    return airline;
+    if (airline.length) {
+      console.log(`Se encontraron ${airline.length} aerolineas`);
+      return airline;
+    } else {
+      return "No se encontraron aerolineas";
+    }
   } catch (e) {
     console.error(`${ERROR}, getAirlines --→ ${e}`);
     return e.message;

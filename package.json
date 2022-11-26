@@ -19,8 +19,10 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "event-stream": "^4.0.1",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
+    "n-readlines": "^1.0.1",
     "pg": "^8.5.1",
     "pg-insert-csv": "^1.1.0",
     "sequelize": "^6.3.5"

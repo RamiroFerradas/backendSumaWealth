@@ -14,16 +14,17 @@ const getFligthsById = async (id) => {
       const airlineID = await Airline.findOne({
         where: { iata_code: flight_ID.airline },
       });
-      {
-        if (airlineID)
-          flight_ID = {
-            ...flight_ID.dataValues,
-            airline: {
-              iata_code: airlineID.iata_code,
-              name: airlineID.airline,
-            },
-          };
+
+      if (airlineID) {
+        flight_ID = {
+          ...flight_ID.dataValues,
+          airline: {
+            iata_code: airlineID.iata_code,
+            name: airlineID.airline,
+          },
+        };
       }
+
       return flight_ID;
     } else {
       console.log(`No se encontraron vuelos con el ID: ${id}`);
@@ -39,7 +40,7 @@ const getFligthsById = async (id) => {
 const getFligthsByNumber = async (flight_number) => {
   try {
     let flight = await Flights.findAll({
-      where: { flight_number },
+      where: { FLIGHT_NUMBER: flight_number },
     });
     if (flight) {
       return flight;
@@ -50,7 +51,7 @@ const getFligthsByNumber = async (flight_number) => {
       return `No se encontraron vuelos con flight_number: ${flight_number}`;
     }
   } catch (e) {
-    console.error(`${ERROR}, getFligthsByNumber --→ ${e}`);
+    console.error(`${ERROR}, getFligthsByNumber --→ ${e.message}`);
     return e.message;
   }
 };
@@ -59,7 +60,7 @@ const getFligthsByNumber = async (flight_number) => {
 const getFligthsByTailNumber = async (tail_number) => {
   try {
     let flight = await Flights.findAll({
-      where: { tail_number: { [Op.iLike]: `%${tail_number}%` } },
+      where: { TAIL_NUMBER: { [Op.iLike]: `%${tail_number}%` } },
     });
 
     if (flight.length) {
