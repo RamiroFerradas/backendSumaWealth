@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+
     res.json(await getAirlinesById(id));
   } catch (e) {
     res.status(404).send(ERROR, e);

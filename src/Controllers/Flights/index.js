@@ -14,15 +14,16 @@ const flightsSeed = new nReadlines(
 );
 
 // SAVE DB (ALL) AIRPORTS
-const FlifgthsDb = async () => {
+const FlifgthsDb = async (cuantity) => {
+  cuantity = cuantity ? cuantity : 5000;
   try {
-    const fligthscount = await Flights.count();
-    for (let i = 0; i < 5000; i++) {
-      await fillDB(flightsSeed, Flights, 1000);
-      await Flights.count();
-    }
+    const flightsCount = await Flights.findAll();
+    if (!flightsCount.length)
+      fillDB(flightsSeed, Flights, cuantity).then(
+        await Flights.count(),
+        console.log(`✔ Vuelos cargados --------> ${await Flights.count()}`)
+      );
 
-    console.log("✔ Vuelos cargados ------------");
     return "✔ Vuelos cargados.";
   } catch (e) {
     console.error(`${ERROR}, getFlights --→ ${e.message}`);
@@ -51,8 +52,14 @@ const getFlights = async (page) => {
       );
       return rows;
     } else {
-      console.log("No se encontraron vuelos");
-      return "No se encontraron vuelos";
+      console.log(
+        !page
+          ? "No se encontraron vuelos"
+          : `No se encontraron vuelos en la pagina ${page}`
+      );
+      return !page
+        ? "No se encontraron vuelos"
+        : `No se encontraron vuelos en la pagina ${page}`;
     }
   } catch (e) {
     console.error(`${ERROR}, getFlights --→ ${e}`);

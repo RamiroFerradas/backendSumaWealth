@@ -8,6 +8,12 @@
 - La API debe tener documentación sobre cómo usarla como si estuviera entregando esta API a und desarrollador front-end.
 - Integrar con una base de datos PostgreSQL y construir seeders para poblar la base de datos con los datos proporcionados.
 
+#### Stack de tecnologías utilizado en el proyecto:
+
+PERN (PostgreSQL, Express, React & Node - sin React ya que no hay Interfaz de Usuario).
+
+Por qué PERN? Porque es donde mejor me desempeño, mas experiencia tengo y el stack que use en todos mis proyectos.
+
 ## Comenzando
 
 1.  Forkear el repositorio para tener una copia del mismo en sus cuentas
@@ -43,7 +49,7 @@ npm start
 ```
 
 3.  Una vez inicializado se cargaran automaticamente los aeropuertos y las aerolineas en la base de datos.
-    Por el gran tamaño del archivo de datos de vuelos ("flights.csv") adjunto en el correo electronico, los vuelos se cargaran en tandas de a 1000 consecutivamente llenando automaticamente la base de datos. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
+    Por el gran tamaño del archivo de datos de vuelos ("flights.csv") adjunto en el correo electronico, se cargaran automaticamente 5000 vuelos. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
     A- Dentro de la interfaz grafica de postgresSQL "pgAdmin 4", accedemos a las tablas ya creadas dentro de la base de datos(airline -> Schemas -> Tables)<p align="left"><img height="300"  src="./Assets/ScreenShots/tablas.jpg" /><p>
     B- Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega
     <p align="left"><img height="300"  src="./Assets/ScreenShots/query tool.jpg" /><p>

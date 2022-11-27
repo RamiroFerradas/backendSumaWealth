@@ -25,8 +25,10 @@ const jsonAirports = async () => {
           },
         });
       });
-      console.log("✔ Aeropuertos cargados ------------");
-      return "✔ Aeropuertos cargados.";
+      await Airport.count();
+      console.log(
+        `✔ Aeropuertos cargados ------------> ${await Airport.count()}`
+      );
     }
   } catch (e) {
     console.error(`${ERROR}, jsonAirports --→ ${e}`);

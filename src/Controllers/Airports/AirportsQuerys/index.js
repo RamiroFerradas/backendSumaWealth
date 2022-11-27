@@ -62,7 +62,6 @@ const getAirportsByCountry = async (country) => {
 // GET (ALL) AIRPORTS BY CITY
 
 const getAirportsByCity = async (city) => {
-  console.log("hola");
   try {
     // city = city.toUpperCase();
     const airportName = await Airport.findAll({

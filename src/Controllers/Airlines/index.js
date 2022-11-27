@@ -20,8 +20,10 @@ const jsonAirlines = async () => {
           },
         });
       });
-      console.log("✔ Aerolineas cargadas ------------");
-      return "✔ Aerolineas cargadas.";
+      await Airline.count();
+      console.log(
+        `✔ Aerolineas cargadas ------------> ${await Airline.count()}`
+      );
     }
   } catch (e) {
     console.error(`${ERROR}, jsonAirlines --→ ${e}`);

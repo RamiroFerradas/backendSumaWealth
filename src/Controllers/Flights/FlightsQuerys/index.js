@@ -40,7 +40,7 @@ const getFligthsById = async (id) => {
 const getFligthsByNumber = async (flight_number) => {
   try {
     let flight = await Flights.findAll({
-      where: { FLIGHT_NUMBER: flight_number },
+      where: { flight_number },
     });
     if (flight) {
       return flight;

@@ -13,7 +13,6 @@ async function fillDB(seed, Model, bundleNum) {
 
     while ((line = seed.next())) {
       const newObj = {};
-
       const stringLine = line.toString().split(",");
       stringLine.forEach((element, index) => {
         newObj[header[index]] = isNaN(Number(element))
