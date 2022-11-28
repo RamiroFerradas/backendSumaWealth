@@ -1,4 +1,4 @@
-<p align="center"><img height="100" width="300"  src="./Assets/ScreenShots/wannabe2png.png" /><p>
+<p align="center"><img height="100" width="300"  src="./Assets/ScreenShots/wannabe.png" /><p>
 
 # Prueba técnica - BACKEND - Suma Wealth
 
