@@ -60,7 +60,7 @@ const getFligthsByNumber = async (flight_number) => {
 const getFligthsByTailNumber = async (tail_number) => {
   try {
     let flight = await Flights.findAll({
-      where: { TAIL_NUMBER: { [Op.iLike]: `%${tail_number}%` } },
+      where: { tail_number: { [Op.iLike]: `%${tail_number}%` } },
     });
 
     if (flight.length) {

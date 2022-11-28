@@ -56,49 +56,27 @@ const postAirport = async (data) => {
   try {
     let { iata_code, airport, city, state, country, latitude, longitude } =
       data;
-    console.log(typeof latitude === "number");
-    if (
-      iata_code &&
-      airport &&
-      city &&
-      state &&
-      country &&
-      typeof latitude === "number" &&
-      typeof longitude === "number"
-    ) {
-      const [row, created] = await Airport.findOrCreate({
-        where: {
-          airport,
-        },
-        defaults: {
-          iata_code,
-          city,
-          state,
-          country,
-          latitude,
-          longitude,
-        },
-      });
-      if (!created) {
-        return `El aeropuerto '${airport}' ya existe`;
-      } else {
-        const airportId = await Airport.findOne({
-          where: { airport },
-        });
-        return `Aeropuerto '${airport}' creado correctamente con el ID: ${airportId.id}`;
-      }
+
+    const [row, created] = await Airport.findOrCreate({
+      where: {
+        airport,
+      },
+      defaults: {
+        iata_code,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+      },
+    });
+    if (!created) {
+      return `El aeropuerto '${airport}' ya existe`;
     } else {
-      console.log(
-        `Faltan datos, revisar: iata_code, airport, city, state, country.`,
-        typeof latitude !== "number" || typeof longitude !== "number"
-          ? "Latitude && longitude deben ser del tipo `number"
-          : ""
-      );
-      return `Faltan datos, revisar: iata_code, airport, city, state, country. Latitude && longitude deben ser del tipo , ${
-        typeof latitude !== "number" || typeof longitude !== "number"
-          ? "Latitude && longitude deben ser del tipo `number`"
-          : ""
-      }`;
+      const airportId = await Airport.findOne({
+        where: { airport },
+      });
+      return `Aeropuerto '${airport}' creado correctamente con el ID: ${airportId.id}`;
     }
   } catch (e) {
     console.error(`${ERROR}, postAirport --→ ${e}`);

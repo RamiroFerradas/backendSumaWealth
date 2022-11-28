@@ -6,7 +6,7 @@ const { jsonAirports } = require("./src/Controllers/Airports/index");
 const { jsonAirlines } = require("./src/Controllers/Airlines/index");
 const { FlifgthsDb } = require("./src/Controllers/Flights/index.js");
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ alter: true }).then(() => {
   const PORT = process.env.PORT ? process.env.PORT : 3001;
   server.listen(PORT, async () => {
     const fligthscount = await Flights.count();

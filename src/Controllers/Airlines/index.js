@@ -70,7 +70,7 @@ const getAirlinesName = async (name) => {
     const airlineName = await Airline.findAll({
       where: { airline: { [Op.iLike]: `%${name}%` } },
     });
-    if (airlineName) {
+    if (airlineName.length) {
       return airlineName;
     } else {
       console.log(`No se encontraron aerolineas con el nombre: ${name}`);

@@ -27,7 +27,7 @@ const getAirportsByName = async (name) => {
     const airportName = await Airport.findAll({
       where: { airport: { [Op.iLike]: `%${name}%` } },
     });
-    if (airportName) {
+    if (airportName.length) {
       return airportName;
     } else {
       console.log(`No se encontraron aeropuertos con el nombre: ${name}`);
