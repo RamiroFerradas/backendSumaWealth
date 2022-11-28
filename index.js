@@ -15,8 +15,8 @@ conn.sync({ force: true }).then(() => {
     console.log(`\n`);
     await jsonAirports(); //Cargar Aeropuertos desde JSON
     await jsonAirlines(); //Cargar Aerolineas desde JSON
-    if (!fligthscount) await FlifgthsDb(3000); // Cargar Vuelos desde CSV
-    /* pasar por argumento cantidad de vuelos a mostrar, tenga en cuenta que mientras mas vuelos mas tardara en cargarlos, y mas sobrecargara su memoria, Default: 5000 */
+    if (!fligthscount) await FlifgthsDb(5000); // Cargar Vuelos desde CSV
+    /* pasar por argumento cantidad de vuelos a mostrar, tenga en cuenta que mientras mas vuelos mas tardara en cargarlos, y mas sobrecargara su memoria, Default: 3000 */
     console.log(`\n`);
   });
 });

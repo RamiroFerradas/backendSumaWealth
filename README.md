@@ -71,7 +71,7 @@ npm start
 ```
 
 5. Una vez inicializado se cargaran automaticamente los aeropuertos y las aerolineas en la base de datos.
-   Por el gran tamaño del archivo de datos de vuelos ("flight s.csv") adjunto en el correo electronico, se cargaran automaticamente 5000 vuelos. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
+   Por el gran tamaño del archivo de datos de vuelos ("flights.csv") adjunto en el correo electronico, se cargaran automaticamente 3000 vuelos, modificar el argumento de la funcion `FlifgthsDb()` que se encuentra de el archivo `index.js`(linea 18) para cargar mas vuelos ej: 'FlifgthsDb(8000)'. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
 
    1. Dentro de la interfaz grafica de postgresSQL "pgAdmin 4", accedemos a las tablas ya creadas dentro de la base de datos(airline -> Schemas -> Tables)<p align="left"><img height="300"  src="./Assets/ScreenShots/tablas.jpg" /><p>
    2. Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega

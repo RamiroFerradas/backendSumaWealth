@@ -2,10 +2,6 @@ const ERROR = "Error @ Controllers/Flights";
 
 async function fillDB(seed, Model, bundleNum) {
   try {
-    // Args:
-    // 1: nReadlines instance
-    // 2: database model
-    // 3: bundle of lines to load at once (watch for memory)
     const header = seed.next().toString().toLowerCase().split(",");
     let line;
     let lineNum = 1;
@@ -30,9 +26,9 @@ async function fillDB(seed, Model, bundleNum) {
 
       if (lineNum === bundleNum) {
         await Promise.all(bundle);
-        // bundle = [];
+        bundle = [];
         lineNum = 1;
-        return; // Comment this return to fully load seeders
+        return;
       } else lineNum++;
     }
 
