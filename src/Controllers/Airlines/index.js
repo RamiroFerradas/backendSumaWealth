@@ -22,7 +22,7 @@ const jsonAirlines = async () => {
       });
       await Airline.count();
       console.log(
-        `✔ Aerolineas cargadas ------------> ${await Airline.count()}`
+        `✔ Aerolineas cargadas -------------> ${await Airline.count()}`
       );
     }
   } catch (e) {
@@ -87,7 +87,7 @@ const postAirline = async (data) => {
   try {
     let { iata_code, airline } = data;
 
-    if (iata_code) {
+    if (iata_code && airline) {
       const [row, created] = await Airline.findOrCreate({
         where: {
           airline,
@@ -105,7 +105,8 @@ const postAirline = async (data) => {
         return `Aerolinea '${airline}' creada correctamente con el ID: ${airlineId.id}`;
       }
     } else {
-      return "Por favor ingresar iata_code";
+      console.log(`Faltan datos, revisar: iata_code o airline,`);
+      return `Faltan datos, revisar: iata_code o airline,`;
     }
   } catch (e) {
     console.error(`${ERROR}, postAirline --→ ${e}`);

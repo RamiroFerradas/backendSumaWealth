@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
       },
       airline: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {

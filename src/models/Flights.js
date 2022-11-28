@@ -8,13 +8,13 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       month: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       day: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       day_of_week: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       airline: {
         type: DataTypes.STRING,

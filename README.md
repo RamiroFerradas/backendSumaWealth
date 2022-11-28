@@ -2,17 +2,40 @@
 
 ---
 
+### Indice:
+
+<ul>
+<li> <a href="#inicio">INICIO</a>
+ <li><a href="#obj">- Objetivos del Proyecto</a></li>
+ <li><a href="#stack">- Stack de tecnologias</a></li>
+ <li><a href="#comenzando">- Comenzando</a></li>
+ </li>
+ <br>
+<li> <a href="#endpoints">ENDPOINTS</a> 
+ <li><a href="#airlines">- Airlines</a></li>
+<li><a href="#airports">- Airports</a></li>
+ <li><a href="#flights">- Flights</a></li></li>
+
+<ul>
+
+<span id="inicio"></span>
+<span id="obj"></span>
+
 ## Objetivos del Proyecto
 
 - Desarrollar una API en Node.js que permita crear, actualice, elimine y obtenga los datos sobre aeropuertos, aerolíneas y vuelos proporcionados.
 - La API debe tener documentación sobre cómo usarla como si estuviera entregando esta API a und desarrollador front-end.
 - Integrar con una base de datos PostgreSQL y construir seeders para poblar la base de datos con los datos proporcionados.
 
+<span id="stack"></span>
+
 #### Stack de tecnologías utilizado en el proyecto:
 
 PERN (PostgreSQL, Express, React & Node - sin React ya que no hay Interfaz de Usuario).
 
 Por qué PERN? Porque es donde mejor me desempeño, mas experiencia tengo y el stack que use en todos mis proyectos.
+
+<span id="comenzando"></span>
 
 ## Comenzando
 
@@ -48,11 +71,12 @@ npm install
 npm start
 ```
 
-3.  Una vez inicializado se cargaran automaticamente los aeropuertos y las aerolineas en la base de datos.
-    Por el gran tamaño del archivo de datos de vuelos ("flights.csv") adjunto en el correo electronico, se cargaran automaticamente 5000 vuelos. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
-    A- Dentro de la interfaz grafica de postgresSQL "pgAdmin 4", accedemos a las tablas ya creadas dentro de la base de datos(airline -> Schemas -> Tables)<p align="left"><img height="300"  src="./Assets/ScreenShots/tablas.jpg" /><p>
-    B- Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega
-    <p align="left"><img height="300"  src="./Assets/ScreenShots/query tool.jpg" /><p>
+[link text](http://...#abcd) 3. Una vez inicializado se cargaran automaticamente los aeropuertos y las aerolineas en la base de datos.
+Por el gran tamaño del archivo de datos de vuelos ("flights.csv") adjunto en el correo electronico, se cargaran automaticamente 5000 vuelos. Para esta funcionalidad lo unico que necesitamos hacer es copiar el archivo `flights.csv` dentro de la carpeta `src\Controllers\Flights`.<p align="left"><img height="300"  src="./Assets/ScreenShots/flightcsv.jpg" /><p> Si se quieren cargar maualmente todos los vuelos del archivo, se deberan cargar manualmente de la siguiente manera:
+A- Dentro de la interfaz grafica de postgresSQL "pgAdmin 4", accedemos a las tablas ya creadas dentro de la base de datos(airline -> Schemas -> Tables)<p align="left"><img height="300"  src="./Assets/ScreenShots/tablas.jpg" /><p>
+B- Nos situamos sobre la tabla "fligths" y hacemos click derecho clickeando "query tool" en el menu que se nos despiega
+
+<p align="left"><img height="300"  src="./Assets/ScreenShots/query tool.jpg" /><p>
 
     C- ingresamos el siguiente script:
 
@@ -71,7 +95,11 @@ npm start
 
 ---
 
+<span id="endpoints"></span>
+
 # Endpoints/Flags que pueden utilizar:
+
+<span id="airlines"></span>
 
 #### AIRLINES
 
@@ -83,14 +111,16 @@ npm start
 
   ```bash
   {
-    "iata_code":"AA",
-    "airline":"Aerolinea de ejemplo"
+    "iata_code":"AA", ---> REQUERIDO
+    "airline":"Aerolinea de ejemplo" ---> REQUERIDO
   }
   ```
 
 - PUT <b style="color:white">/airlines/{id}</b> --> Modificar una aerolinia particular mediante un ID proporcionado por params, y los mismos parametros que queramos modificar por el cuerpo de la petición (request.body) al igual que el `'POST'`.
 
 - DELETE <b style="color:white">/airlines/{id}</b> --> Borrar una aerolinia particular mediante un ID proporcionado por params.
+
+<span id="airports"></span>
 
 #### AIRPORTS
 
@@ -105,11 +135,11 @@ npm start
 
   ```bash
   {
-    "iata_code": "ABC",
-    "airport": "Aeropuerto de ejemplo",
-    "city": "Albany",
-    "state": "GA",
-    "country": "USA",
+    "iata_code": "ABC", ---> REQUERIDO
+    "airport": "Aeropuerto de ejemplo", ---> REQUERIDO
+    "city": "Albany", ---> REQUERIDO
+    "state": "GA", ---> REQUERIDO
+    "country": "USA", ---> REQUERIDO
     "latitude": 31.53552,
     "longitude": -84.19447
   }
@@ -118,6 +148,8 @@ npm start
 - PUT <b style="color:white">/airports/{id}</b> --> Modificar un aeropuerto particular mediante un ID proporcionado por params, y los mismos parametros que queramos modificar por el cuerpo de la petición (request.body) al igual que el `'POST'`.
 
 - DELETE <b style="color:white">/airports/{id}</b> --> Borrar un aeropuerto particular mediante un ID proporcionado por 'params'.
+
+<span id="flights"></span>
 
 #### FLIGHTS
 

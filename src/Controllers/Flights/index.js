@@ -1,12 +1,10 @@
-const { Flights, Airline } = require("../../db");
+const { Flights } = require("../../db");
 const { Op } = require("sequelize");
 const e = require("express");
-// const flightFile = require("../../Controllers/Flights/flights.csv");
-
-const ERROR = "Error @ Controllers/Flights";
-
 const path = require("path");
 const nReadlines = require("n-readlines");
+
+const ERROR = "Error @ Controllers/Flights";
 
 const fillDB = require("./fillDB");
 const flightsSeed = new nReadlines(
@@ -17,12 +15,14 @@ const flightsSeed = new nReadlines(
 const FlifgthsDb = async (cuantity) => {
   cuantity = cuantity ? cuantity : 5000;
   try {
-    const flightsCount = await Flights.findAll();
-    if (!flightsCount.length)
-      fillDB(flightsSeed, Flights, cuantity).then(
-        await Flights.count(),
-        console.log(`✔ Vuelos cargados --------> ${await Flights.count()}`)
-      );
+    // const flightsCount = await Flights.findAll();
+    // if (!flightsCount.length)
+    fillDB(flightsSeed, Flights, cuantity).then(
+      await Flights.count(),
+      console.log(
+        `✔ Vuelos cargados -----------------> ${await Flights.count()}`
+      )
+    );
 
     return "✔ Vuelos cargados.";
   } catch (e) {
@@ -30,6 +30,7 @@ const FlifgthsDb = async (cuantity) => {
     return e.message;
   }
 };
+
 // GET (ALL) FLIGHTS
 
 const getFlights = async (page) => {
@@ -71,78 +72,103 @@ const getFlights = async (page) => {
 const postFlight = async (data) => {
   try {
     let {
-      YEAR,
-      MONTH,
-      DAY,
-      DAY_OF_WEEK,
-      AIRLINE,
-      FLIGHT_NUMBER,
-      TAIL_NUMBER,
-      ORIGIN_AIRPORT,
-      DESTINATION_AIRPORT,
-      SCHEDULED_DEPARTURE,
-      DEPARTURE_TIME,
-      DEPARTURE_DELAY,
-      TAXI_OUT,
-      WHEELS_OFF,
-      SCHEDULED_TIME,
-      ELAPSED_TIME,
-      AIR_TIME,
-      DISTANCE,
-      WHEELS_ON,
-      TAXI_IN,
-      SCHEDULED_ARRIVAL,
-      ARRIVAL_TIME,
-      ARRIVAL_DELAY,
-      DIVERTED,
-      CANCELLED,
-      CANCELLATION_REASON,
-      AIR_SYSTEM_DELAY,
-      SECURITY_DELAY,
-      AIRLINE_DELAY,
-      LATE_AIRCRAFT_DELAY,
-      WEATHER_DELAY,
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
     } = data;
+    if (
+      typeof year === "number" &&
+      typeof month === "number" &&
+      typeof day === "number" &&
+      typeof day_of_week === "number" &&
+      typeof flight_number === "number" &&
+      typeof departure_time === "number" &&
+      typeof departure_delay === "number" &&
+      typeof taxi_out === "number" &&
+      typeof scheduled_time === "number" &&
+      typeof elapsed_time === "number" &&
+      typeof air_time === "number" &&
+      typeof distance === "number" &&
+      typeof taxi_in === "number" &&
+      typeof arrival_delay === "number" &&
+      typeof diverted === "number" &&
+      typeof cancelled === "number"
+    ) {
+      const postFlight = await Flights.create({
+        year,
+        month,
+        day,
+        day_of_week,
+        airline,
+        flight_number,
+        tail_number,
+        origin_airport,
+        destination_airport,
+        scheduled_departure,
+        departure_time,
+        departure_delay,
+        taxi_out,
+        wheels_off,
+        scheduled_time,
+        elapsed_time,
+        air_time,
+        distance,
+        wheels_on,
+        taxi_in,
+        scheduled_arrival,
+        arrival_time,
+        arrival_delay,
+        diverted,
+        cancelled,
+        cancellation_reason,
+        air_system_delay,
+        security_delay,
+        airline_delay,
+        late_aircraft_delay,
+        weather_delay,
+      });
 
-    const postFlight = await Flights.create({
-      YEAR,
-      MONTH,
-      DAY,
-      DAY_OF_WEEK,
-      AIRLINE,
-      FLIGHT_NUMBER,
-      TAIL_NUMBER,
-      ORIGIN_AIRPORT,
-      DESTINATION_AIRPORT,
-      SCHEDULED_DEPARTURE,
-      DEPARTURE_TIME,
-      DEPARTURE_DELAY,
-      TAXI_OUT,
-      WHEELS_OFF,
-      SCHEDULED_TIME,
-      ELAPSED_TIME,
-      AIR_TIME,
-      DISTANCE,
-      WHEELS_ON,
-      TAXI_IN,
-      SCHEDULED_ARRIVAL,
-      ARRIVAL_TIME,
-      ARRIVAL_DELAY,
-      DIVERTED,
-      CANCELLED,
-      CANCELLATION_REASON,
-      AIR_SYSTEM_DELAY,
-      SECURITY_DELAY,
-      AIRLINE_DELAY,
-      LATE_AIRCRAFT_DELAY,
-      WEATHER_DELAY,
-    });
-
-    if (postFlight) {
-      console.log(`Se creo el vuelo correctamente con el ID: ${postFlight.id}`);
-      return postFlight;
+      if (postFlight) {
+        console.log(
+          `Se creo el vuelo correctamente con el ID: ${postFlight.id}`
+        );
+        return postFlight;
+      } else {
+        return "No se pudo crear el vuelo, vuelve a intentarlo";
+      }
     } else {
-      return "No se pudo crear el vuelo, vuelve a intentarlo";
+      console.log(
+        `Los datos year, month,day, day_of_week, flight_number,scheduled_departure, departure_time, departure_delay, taxi_out,scheduled_time, elapsed_time, air_time, distance, arrival_delay, diverted, cancelled, deben ser del tipo 'number' `
+      );
+      return `Los datos year, month,day, day_of_week, flight_number,scheduled_departure, departure_time, departure_delay, taxi_out,scheduled_time, elapsed_time, air_time, distance, arrival_delay, diverted, cancelled, deben ser del tipo 'number' `;
     }
   } catch (e) {
     console.error(`${ERROR}, postFlight --→ ${e}`);
@@ -154,86 +180,87 @@ const postFlight = async (data) => {
 const modifyFlight = async (id, data) => {
   try {
     let {
-      YEAR,
-      MONTH,
-      DAY,
-      DAY_OF_WEEK,
-      AIRLINE,
-      FLIGHT_NUMBER,
-      TAIL_NUMBER,
-      ORIGIN_AIRPORT,
-      DESTINATION_AIRPORT,
-      SCHEDULED_DEPARTURE,
-      DEPARTURE_TIME,
-      DEPARTURE_DELAY,
-      TAXI_OUT,
-      WHEELS_OFF,
-      SCHEDULED_TIME,
-      ELAPSED_TIME,
-      AIR_TIME,
-      DISTANCE,
-      WHEELS_ON,
-      TAXI_IN,
-      SCHEDULED_ARRIVAL,
-      ARRIVAL_TIME,
-      ARRIVAL_DELAY,
-      DIVERTED,
-      CANCELLED,
-      CANCELLATION_REASON,
-      AIR_SYSTEM_DELAY,
-      SECURITY_DELAY,
-      AIRLINE_DELAY,
-      LATE_AIRCRAFT_DELAY,
-      WEATHER_DELAY,
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
     } = data;
-
-    const updateFlight = await Flights.update(
-      {
-        YEAR,
-        MONTH,
-        DAY,
-        DAY_OF_WEEK,
-        AIRLINE,
-        FLIGHT_NUMBER,
-        TAIL_NUMBER,
-        ORIGIN_AIRPORT,
-        DESTINATION_AIRPORT,
-        SCHEDULED_DEPARTURE,
-        DEPARTURE_TIME,
-        DEPARTURE_DELAY,
-        TAXI_OUT,
-        WHEELS_OFF,
-        SCHEDULED_TIME,
-        ELAPSED_TIME,
-        AIR_TIME,
-        DISTANCE,
-        WHEELS_ON,
-        TAXI_IN,
-        SCHEDULED_ARRIVAL,
-        ARRIVAL_TIME,
-        ARRIVAL_DELAY,
-        DIVERTED,
-        CANCELLED,
-        CANCELLATION_REASON,
-        AIR_SYSTEM_DELAY,
-        SECURITY_DELAY,
-        AIRLINE_DELAY,
-        LATE_AIRCRAFT_DELAY,
-        WEATHER_DELAY,
-      },
-
-      {
-        where: {
-          id,
+    {
+      const updateFlight = await Flights.update(
+        {
+          year,
+          month,
+          day,
+          day_of_week,
+          airline,
+          flight_number,
+          tail_number,
+          origin_airport,
+          destination_airport,
+          scheduled_departure,
+          departure_time,
+          departure_delay,
+          taxi_out,
+          wheels_off,
+          scheduled_time,
+          elapsed_time,
+          air_time,
+          distance,
+          wheels_on,
+          taxi_in,
+          scheduled_arrival,
+          arrival_time,
+          arrival_delay,
+          diverted,
+          cancelled,
+          cancellation_reason,
+          air_system_delay,
+          security_delay,
+          airline_delay,
+          late_aircraft_delay,
+          weather_delay,
         },
-      }
-    );
 
-    if (updateFlight) {
-      console.log(`Se actualizo el vuelo id: ${id} correctamente.`);
-      return `Se actualizo el vuelo id: ${id} correctamente.`;
-    } else {
-      return "No se pudo actualizar el vuelo";
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      if (updateFlight) {
+        console.log(`Se actualizo el vuelo id: ${id} correctamente.`);
+        return `Se actualizo el vuelo id: ${id} correctamente.`;
+      } else {
+        return "No se pudo actualizar el vuelo";
+      }
     }
   } catch (e) {
     console.error(`${ERROR}, modifyFlight --→ ${e}`);

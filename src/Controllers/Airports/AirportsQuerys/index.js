@@ -42,13 +42,16 @@ const getAirportsByName = async (name) => {
 const getAirportsByCountry = async (country) => {
   try {
     country = country.toUpperCase();
-    const airportName = await Airport.findAll({
+    const airportCountry = await Airport.findAll({
       where: {
         country: { [Op.iLike]: `%${country}%` },
       },
     });
-    if (airportName.length) {
-      return airportName;
+    if (airportCountry.length) {
+      console.log(
+        `Se encontraron ${airportCountry.length} aeropuertos en ese pais`
+      );
+      return airportCountry;
     } else {
       console.log(`No se encontraron aeropuertos en el pais: ${country}`);
       return `No se encontraron aeropuertos en el pais: ${country}`;
@@ -64,13 +67,16 @@ const getAirportsByCountry = async (country) => {
 const getAirportsByCity = async (city) => {
   try {
     // city = city.toUpperCase();
-    const airportName = await Airport.findAll({
+    const airportCity = await Airport.findAll({
       where: {
         city: { [Op.iLike]: `%${city}%` },
       },
     });
-    if (airportName.length) {
-      return airportName;
+    if (airportCity.length) {
+      console.log(
+        `Se encontraron ${airportCity.length} aeropuertos en esa ciudad`
+      );
+      return airportCity;
     } else {
       console.log(`No se encontraron aeropuertos en la ciudad: ${city}`);
       return `No se encontraron aeropuertos en la ciudad: ${city}`;

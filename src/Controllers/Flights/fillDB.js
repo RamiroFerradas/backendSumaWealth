@@ -30,7 +30,7 @@ async function fillDB(seed, Model, bundleNum) {
 
       if (lineNum === bundleNum) {
         await Promise.all(bundle);
-        bundle = [];
+        // bundle = [];
         lineNum = 1;
         return; // Comment this return to fully load seeders
       } else lineNum++;
