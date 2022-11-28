@@ -13,7 +13,7 @@ const flightsSeed = new nReadlines(
 
 // SAVE DB (ALL) AIRPORTS
 const FlifgthsDb = async (cuantity) => {
-  cuantity = cuantity ? cuantity : 3000;
+  cuantity = cuantity && typeof cuantity === "number" ? cuantity : 3000;
   try {
     // const flightsCount = await Flights.findAll();
     // if (!flightsCount.length)
