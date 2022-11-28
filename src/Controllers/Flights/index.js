@@ -104,71 +104,46 @@ const postFlight = async (data) => {
       late_aircraft_delay,
       weather_delay,
     } = data;
-    if (
-      typeof year === "number" &&
-      typeof month === "number" &&
-      typeof day === "number" &&
-      typeof day_of_week === "number" &&
-      typeof flight_number === "number" &&
-      typeof departure_time === "number" &&
-      typeof departure_delay === "number" &&
-      typeof taxi_out === "number" &&
-      typeof scheduled_time === "number" &&
-      typeof elapsed_time === "number" &&
-      typeof air_time === "number" &&
-      typeof distance === "number" &&
-      typeof taxi_in === "number" &&
-      typeof arrival_delay === "number" &&
-      typeof diverted === "number" &&
-      typeof cancelled === "number"
-    ) {
-      const postFlight = await Flights.create({
-        year,
-        month,
-        day,
-        day_of_week,
-        airline,
-        flight_number,
-        tail_number,
-        origin_airport,
-        destination_airport,
-        scheduled_departure,
-        departure_time,
-        departure_delay,
-        taxi_out,
-        wheels_off,
-        scheduled_time,
-        elapsed_time,
-        air_time,
-        distance,
-        wheels_on,
-        taxi_in,
-        scheduled_arrival,
-        arrival_time,
-        arrival_delay,
-        diverted,
-        cancelled,
-        cancellation_reason,
-        air_system_delay,
-        security_delay,
-        airline_delay,
-        late_aircraft_delay,
-        weather_delay,
-      });
 
-      if (postFlight) {
-        console.log(
-          `Se creo el vuelo correctamente con el ID: ${postFlight.id}`
-        );
-        return postFlight;
-      } else {
-        return "No se pudo crear el vuelo, vuelve a intentarlo";
-      }
+    const postFlight = await Flights.create({
+      year,
+      month,
+      day,
+      day_of_week,
+      airline,
+      flight_number,
+      tail_number,
+      origin_airport,
+      destination_airport,
+      scheduled_departure,
+      departure_time,
+      departure_delay,
+      taxi_out,
+      wheels_off,
+      scheduled_time,
+      elapsed_time,
+      air_time,
+      distance,
+      wheels_on,
+      taxi_in,
+      scheduled_arrival,
+      arrival_time,
+      arrival_delay,
+      diverted,
+      cancelled,
+      cancellation_reason,
+      air_system_delay,
+      security_delay,
+      airline_delay,
+      late_aircraft_delay,
+      weather_delay,
+    });
+
+    if (postFlight) {
+      console.log(`Se creo el vuelo correctamente con el ID: ${postFlight.id}`);
+      return postFlight;
     } else {
-      console.log(
-        `Los datos year, month,day, day_of_week, flight_number,scheduled_departure, departure_time, departure_delay, taxi_out,scheduled_time, elapsed_time, air_time, distance, arrival_delay, diverted, cancelled, deben ser del tipo 'number' `
-      );
-      return `Los datos year, month,day, day_of_week, flight_number,scheduled_departure, departure_time, departure_delay, taxi_out,scheduled_time, elapsed_time, air_time, distance, arrival_delay, diverted, cancelled, deben ser del tipo 'number' `;
+      return "No se pudo crear el vuelo, vuelve a intentarlo";
     }
   } catch (e) {
     console.error(`${ERROR}, postFlight --→ ${e}`);
