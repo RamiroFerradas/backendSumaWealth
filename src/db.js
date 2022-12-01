@@ -12,6 +12,16 @@ const sequelize = new Sequelize(
   }
 );
 
+sequelize.sync().then(
+  () => {
+    console.log("DB connection sucessful.");
+  },
+  (e) => {
+    // catch error here
+    console.log(e ? e.message : "ERROR DB");
+  }
+);
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
